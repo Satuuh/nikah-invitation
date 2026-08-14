@@ -15,23 +15,24 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
     <style>
-        /* ===== CSS-переменные ===== */
+        /* ===== CSS-переменные (зелёная гамма) ===== */
         :root {
-    --deep-green: #2C4A2F;        /* основной тёмно-зелёный */
-    --dark-green: #1A3320;        /* почти чёрно-зелёный */
-    --gold: #8A9A6B;              /* оливково-зелёный вместо золота */
-    --gold-light: #B5C29A;        /* светлый оливковый */
-    --gold-dark: #61703F;         /* тёмный оливковый */
-    --cream: #EAF0E3;             /* зеленовато-кремовый фон */
-    --white: #FFFFFF;
-    --text-dark: #2A2E26;         /* тёмно-зелёно-серый текст */
-    --text-muted: #5A6252;        /* приглушённый зелёно-серый */
-    --shadow-soft: 0 8px 30px rgba(0,0,0,0.08);
-    --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
-    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --radius: 16px;
-    --border-gold: 1px solid rgba(138,154,107,0.5);
-}
+            --deep-green: #2C4A2F;        /* основной тёмно-зелёный */
+            --dark-green: #1A3320;        /* почти чёрно-зелёный */
+            --gold: #8A9A6B;              /* оливково-зелёный вместо золота */
+            --gold-light: #B5C29A;        /* светлый оливковый */
+            --gold-dark: #61703F;         /* тёмный оливковый */
+            --cream: #EAF0E3;             /* зеленовато-кремовый фон */
+            --white: #FFFFFF;
+            --text-dark: #2A2E26;         /* тёмно-зелёно-серый текст */
+            --text-muted: #5A6252;        /* приглушённый зелёно-серый */
+            --shadow-soft: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --radius: 16px;
+            --border-gold: 1px solid rgba(138,154,107,0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -47,43 +48,58 @@
             position: relative;
             overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(201,169,98,0.03) 2px, transparent 2.5px),
-                radial-gradient(circle at 85% 85%, rgba(201,169,98,0.03) 2px, transparent 2.5px),
-                repeating-linear-gradient(45deg, rgba(201,169,98,0.01) 0px, rgba(201,169,98,0.01) 1px, transparent 1px, transparent 20px);
+                radial-gradient(circle at 15% 15%, rgba(138,154,107,0.03) 2px, transparent 2.5px),
+                radial-gradient(circle at 85% 85%, rgba(138,154,107,0.03) 2px, transparent 2.5px),
+                repeating-linear-gradient(45deg, rgba(138,154,107,0.01) 0px, rgba(138,154,107,0.01) 1px, transparent 1px, transparent 20px);
             background-size: 80px 80px, 80px 80px, 100% 100%;
             display: flex;
             justify-content: center;
             padding: 20px;
         }
 
-        /* ===== Фоновые лилии ===== */
-        .lily {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.15;
-            filter: blur(0.5px);
-            transition: var(--transition);
-        }
-        .lily:hover {
-            opacity: 0.3;
-            transform: scale(1.05);
-        }
-        .lily-1 { top: 5%; left: 3%; width: 120px; height: 120px; }
-        .lily-2 { bottom: 5%; right: 3%; width: 150px; height: 150px; transform: rotate(45deg); }
-        .lily-3 { top: 40%; left: 8%; width: 90px; height: 90px; }
-        .lily-4 { bottom: 30%; right: 8%; width: 100px; height: 100px; transform: rotate(-30deg); }
-
         .invitation-container {
             max-width: 800px;
             width: 100%;
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(3px);
             border-radius: var(--radius);
             box-shadow: var(--shadow-soft);
             padding: 40px 30px;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(201,169,98,0.2);
+            border: 1px solid rgba(138,154,107,0.2);
+            z-index: 1;
+        }
+
+        /* ===== Лилии (позади текста) ===== */
+        .lily {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+            filter: blur(0.3px);
+            transition: var(--transition);
+            animation: sway 6s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+        .lily:hover {
+            opacity: 0.45;
+            transform: scale(1.05);
+        }
+        .lily-1 { top: 5%; left: 5%; width: 140px; height: 140px; animation-duration: 7s; }
+        .lily-2 { bottom: 5%; right: 5%; width: 170px; height: 170px; transform: rotate(45deg); animation-duration: 8s; }
+        .lily-3 { top: 40%; left: 10%; width: 110px; height: 110px; animation-duration: 9s; }
+        .lily-4 { bottom: 30%; right: 8%; width: 120px; height: 120px; transform: rotate(-30deg); animation-duration: 7.5s; }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(0deg) translateX(0); }
+            25% { transform: rotate(3deg) translateX(5px); }
+            75% { transform: rotate(-2deg) translateX(-5px); }
+        }
+
+        /* Контент поверх лилий */
+        .content-overlay {
+            position: relative;
             z-index: 1;
         }
 
@@ -111,7 +127,7 @@
             padding: 0 15px;
             position: relative;
             z-index: 1;
-            background: var(--white);
+            background: rgba(255,255,255,0.8);
         }
 
         .main-title {
@@ -125,11 +141,10 @@
             line-height: 1.2;
             letter-spacing: 2px;
             margin-bottom: 5px;
-            background: linear-gradient(135deg, #c9a962 0%, #e0c88a 30%, #a8893f 70%, #c9a962 100%);
+            background: linear-gradient(135deg, #7d8f5e 0%, #b0bd8a 30%, #61703f 70%, #8a9a6b 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 8px rgba(201,169,98,0.3);
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
         }
         .main-title .nikah-word {
@@ -157,7 +172,7 @@
             flex-wrap: wrap;
         }
         .info-card {
-            background: var(--cream);
+            background: rgba(255,255,255,0.6);
             border: var(--border-gold);
             border-radius: 12px;
             padding: 20px 25px;
@@ -169,7 +184,7 @@
         .info-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
-            background: #fffdf7;
+            background: rgba(255,255,255,0.8);
         }
         .info-card .icon { font-size: 2.5rem; color: var(--gold); margin-bottom: 5px; display: block; }
         .info-card .label { font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 5px; }
@@ -185,12 +200,12 @@
         }
         .invitation-text p { margin-bottom: 15px; }
         .invitation-text .gift-note {
-            background: var(--cream);
+            background: #BCC9AC;          /* светлый шалфейный */
             border-left: 3px solid var(--gold);
             padding: 15px 20px;
             border-radius: 8px;
             font-style: italic;
-            color: var(--text-muted);
+            color: #2A3A2A;
             margin-top: 20px;
             font-size: 1.1rem;
         }
@@ -222,17 +237,17 @@
         .form-group input {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid rgba(201,169,98,0.4);
+            border: 1px solid rgba(138,154,107,0.4);
             border-radius: 8px;
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.1rem;
-            background: var(--white);
+            background: rgba(255,255,255,0.8);
             transition: var(--transition);
             outline: none;
         }
         .form-group input:focus {
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(201,169,98,0.2);
+            box-shadow: 0 0 0 3px rgba(138,154,107,0.2);
         }
         .submit-btn {
             background: linear-gradient(135deg, var(--deep-green) 0%, var(--dark-green) 100%);
@@ -245,15 +260,15 @@
             border-radius: 30px;
             cursor: pointer;
             transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(26,60,52,0.3);
+            box-shadow: 0 4px 15px rgba(44,74,47,0.3);
             display: inline-flex;
             align-items: center;
             gap: 10px;
             text-transform: uppercase;
         }
         .submit-btn:hover {
-            background: linear-gradient(135deg, var(--dark-green) 0%, #0a1f1a 100%);
-            box-shadow: 0 8px 25px rgba(26,60,52,0.5);
+            background: linear-gradient(135deg, var(--dark-green) 0%, #0a1f0f 100%);
+            box-shadow: 0 8px 25px rgba(44,74,47,0.5);
             transform: translateY(-2px);
         }
         .submit-btn:disabled {
@@ -489,157 +504,200 @@
         .delay-4 { animation-delay: 0.8s; }
 
         @media (max-width: 600px) {
-            .invitation-container {
-                padding: 20px 15px;
-            }
-            .main-title h1 {
-                font-size: 3rem;
-            }
-            .main-title .nikah-word {
-                font-size: 2rem;
-                letter-spacing: 5px;
-            }
-            .info-cards {
-                gap: 10px;
-            }
-            .info-card {
-                padding: 15px;
-                min-width: 130px;
-            }
-            .info-card .value {
-                font-size: 1.5rem;
-            }
-            .submit-btn {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-            .admin-content,
-            .couple-content {
-                padding: 20px;
-            }
+            .invitation-container { padding: 20px 15px; }
+            .main-title h1 { font-size: 3rem; }
+            .main-title .nikah-word { font-size: 2rem; letter-spacing: 5px; }
+            .info-cards { gap: 10px; }
+            .info-card { padding: 15px; min-width: 130px; }
+            .info-card .value { font-size: 1.5rem; }
+            .submit-btn { padding: 12px 30px; font-size: 1rem; }
+            .admin-content, .couple-content { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Фоновые белые лилии (SVG) -->
-    <div class="lily lily-1">
-        <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke="#ffffff" stroke-width="1.5">
-                <path d="M50,10 C55,30 70,40 50,50 C30,40 45,30 50,10" fill="rgba(255,255,255,0.4)"/>
-                <path d="M10,50 C30,55 40,70 50,50 C40,30 30,45 10,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M90,50 C70,55 60,70 50,50 C60,30 70,45 90,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M50,90 C55,70 70,60 50,50 C30,60 45,70 50,90" fill="rgba(255,255,255,0.4)"/>
-                <circle cx="50" cy="50" r="5" fill="#ffffff" stroke="#d4af37" stroke-width="1"/>
-            </g>
-        </svg>
-    </div>
-    <div class="lily lily-2">
-        <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke="#ffffff" stroke-width="1.5">
-                <path d="M50,10 C55,30 70,40 50,50 C30,40 45,30 50,10" fill="rgba(255,255,255,0.4)"/>
-                <path d="M10,50 C30,55 40,70 50,50 C40,30 30,45 10,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M90,50 C70,55 60,70 50,50 C60,30 70,45 90,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M50,90 C55,70 70,60 50,50 C30,60 45,70 50,90" fill="rgba(255,255,255,0.4)"/>
-                <circle cx="50" cy="50" r="5" fill="#ffffff" stroke="#d4af37" stroke-width="1"/>
-            </g>
-        </svg>
-    </div>
-    <div class="lily lily-3">
-        <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke="#ffffff" stroke-width="1.5">
-                <path d="M50,10 C55,30 70,40 50,50 C30,40 45,30 50,10" fill="rgba(255,255,255,0.4)"/>
-                <path d="M10,50 C30,55 40,70 50,50 C40,30 30,45 10,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M90,50 C70,55 60,70 50,50 C60,30 70,45 90,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M50,90 C55,70 70,60 50,50 C30,60 45,70 50,90" fill="rgba(255,255,255,0.4)"/>
-                <circle cx="50" cy="50" r="5" fill="#ffffff" stroke="#d4af37" stroke-width="1"/>
-            </g>
-        </svg>
-    </div>
-    <div class="lily lily-4">
-        <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" stroke="#ffffff" stroke-width="1.5">
-                <path d="M50,10 C55,30 70,40 50,50 C30,40 45,30 50,10" fill="rgba(255,255,255,0.4)"/>
-                <path d="M10,50 C30,55 40,70 50,50 C40,30 30,45 10,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M90,50 C70,55 60,70 50,50 C60,30 70,45 90,50" fill="rgba(255,255,255,0.4)"/>
-                <path d="M50,90 C55,70 70,60 50,50 C30,60 45,70 50,90" fill="rgba(255,255,255,0.4)"/>
-                <circle cx="50" cy="50" r="5" fill="#ffffff" stroke="#d4af37" stroke-width="1"/>
-            </g>
-        </svg>
-    </div>
-
     <div class="invitation-container">
 
-        <div class="ornament-top">
-            <span class="ornament-symbol">✦ ✦ ✦</span>
+        <!-- Лилии (живые, позади текста) -->
+        <div class="lily lily-1">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="lilyGrad1" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                        <stop offset="70%" stop-color="#f5f0e8" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#e8e0d0" stop-opacity="0.6"/>
+                    </radialGradient>
+                </defs>
+                <g transform="translate(100,100)">
+                    <path d="M0,-80 C25,-80 35,-50 0,-10 C-35,-50 -25,-80 0,-80" fill="url(#lilyGrad1)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M69,-40 C69,-65 40,-75 10,-50 C40,-25 69,-15 69,-40" fill="url(#lilyGrad1)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M-69,-40 C-69,-65 -40,-75 -10,-50 C-40,-25 -69,-15 -69,-40" fill="url(#lilyGrad1)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M0,-55 C15,-55 20,-35 0,-10 C-20,-35 -15,-55 0,-55" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M48,-28 C48,-45 28,-50 8,-35 C28,-20 48,-10 48,-28" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M-48,-28 C-48,-45 -28,-50 -8,-35 C-28,-20 -48,-10 -48,-28" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <line x1="0" y1="0" x2="0" y2="-25" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="15" y2="-20" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="-15" y2="-20" stroke="#d4af37" stroke-width="1.5"/>
+                    <circle cx="0" cy="-25" r="3" fill="#d4af37"/>
+                    <circle cx="15" cy="-20" r="3" fill="#d4af37"/>
+                    <circle cx="-15" cy="-20" r="3" fill="#d4af37"/>
+                    <circle cx="0" cy="0" r="6" fill="#d4af37"/>
+                </g>
+            </svg>
+        </div>
+        <div class="lily lily-2">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="lilyGrad2" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                        <stop offset="70%" stop-color="#f5f0e8" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#e8e0d0" stop-opacity="0.6"/>
+                    </radialGradient>
+                </defs>
+                <g transform="translate(100,100)">
+                    <path d="M0,-85 C27,-85 37,-53 0,-12 C-37,-53 -27,-85 0,-85" fill="url(#lilyGrad2)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M73,-42 C73,-68 42,-79 10,-52 C42,-25 73,-15 73,-42" fill="url(#lilyGrad2)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M-73,-42 C-73,-68 -42,-79 -10,-52 C-42,-25 -73,-15 -73,-42" fill="url(#lilyGrad2)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M0,-58 C16,-58 21,-37 0,-12 C-21,-37 -16,-58 0,-58" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M50,-29 C50,-47 29,-52 8,-37 C29,-22 50,-12 50,-29" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M-50,-29 C-50,-47 -29,-52 -8,-37 C-29,-22 -50,-12 -50,-29" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <line x1="0" y1="0" x2="0" y2="-28" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="16" y2="-22" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="-16" y2="-22" stroke="#d4af37" stroke-width="1.5"/>
+                    <circle cx="0" cy="-28" r="3" fill="#d4af37"/>
+                    <circle cx="16" cy="-22" r="3" fill="#d4af37"/>
+                    <circle cx="-16" cy="-22" r="3" fill="#d4af37"/>
+                    <circle cx="0" cy="0" r="6" fill="#d4af37"/>
+                </g>
+            </svg>
+        </div>
+        <div class="lily lily-3">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="lilyGrad3" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                        <stop offset="70%" stop-color="#f5f0e8" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#e8e0d0" stop-opacity="0.6"/>
+                    </radialGradient>
+                </defs>
+                <g transform="translate(100,100)">
+                    <path d="M0,-70 C22,-70 30,-44 0,-8 C-30,-44 -22,-70 0,-70" fill="url(#lilyGrad3)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M60,-35 C60,-56 34,-65 8,-43 C34,-21 60,-14 60,-35" fill="url(#lilyGrad3)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M-60,-35 C-60,-56 -34,-65 -8,-43 C-34,-21 -60,-14 -60,-35" fill="url(#lilyGrad3)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M0,-48 C13,-48 17,-30 0,-8 C-17,-30 -13,-48 0,-48" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M41,-24 C41,-39 24,-43 7,-30 C24,-17 41,-9 41,-24" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M-41,-24 C-41,-39 -24,-43 -7,-30 C-24,-17 -41,-9 -41,-24" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <line x1="0" y1="0" x2="0" y2="-22" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="13" y2="-18" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="-13" y2="-18" stroke="#d4af37" stroke-width="1.5"/>
+                    <circle cx="0" cy="-22" r="3" fill="#d4af37"/>
+                    <circle cx="13" cy="-18" r="3" fill="#d4af37"/>
+                    <circle cx="-13" cy="-18" r="3" fill="#d4af37"/>
+                    <circle cx="0" cy="0" r="5" fill="#d4af37"/>
+                </g>
+            </svg>
+        </div>
+        <div class="lily lily-4">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="lilyGrad4" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                        <stop offset="70%" stop-color="#f5f0e8" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#e8e0d0" stop-opacity="0.6"/>
+                    </radialGradient>
+                </defs>
+                <g transform="translate(100,100)">
+                    <path d="M0,-78 C24,-78 33,-49 0,-11 C-33,-49 -24,-78 0,-78" fill="url(#lilyGrad4)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M67,-39 C67,-61 38,-70 9,-48 C38,-23 67,-14 67,-39" fill="url(#lilyGrad4)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M-67,-39 C-67,-61 -38,-70 -9,-48 C-38,-23 -67,-14 -67,-39" fill="url(#lilyGrad4)" stroke="#d4c9b0" stroke-width="1"/>
+                    <path d="M0,-54 C15,-54 19,-33 0,-11 C-19,-33 -15,-54 0,-54" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M46,-27 C46,-43 27,-48 8,-34 C27,-19 46,-10 46,-27" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <path d="M-46,-27 C-46,-43 -27,-48 -8,-34 C-27,-19 -46,-10 -46,-27" fill="#ffffff" stroke="#d4c9b0" stroke-width="0.8"/>
+                    <line x1="0" y1="0" x2="0" y2="-25" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="14" y2="-20" stroke="#d4af37" stroke-width="1.5"/>
+                    <line x1="0" y1="0" x2="-14" y2="-20" stroke="#d4af37" stroke-width="1.5"/>
+                    <circle cx="0" cy="-25" r="3" fill="#d4af37"/>
+                    <circle cx="14" cy="-20" r="3" fill="#d4af37"/>
+                    <circle cx="-14" cy="-20" r="3" fill="#d4af37"/>
+                    <circle cx="0" cy="0" r="6" fill="#d4af37"/>
+                </g>
+            </svg>
         </div>
 
-        <header class="main-title animate-in">
-            <h1>Ибрагим & Наиля</h1>
-            <div class="nikah-word">Никах</div>
-            <div class="blessing">С благословения Всевышнего</div>
-        </header>
-
-        <div class="info-cards animate-in delay-1">
-            <div class="info-card">
-                <span class="icon">🗓️</span>
-                <div class="label">Дата</div>
-                <div class="value">27 сентября</div>
-                <div class="sub-value">2026 года</div>
+        <!-- Контент -->
+        <div class="content-overlay">
+            <div class="ornament-top">
+                <span class="ornament-symbol">✦ ✦ ✦</span>
             </div>
-            <div class="info-card">
-                <span class="icon">🕚</span>
-                <div class="label">Время</div>
-                <div class="value">11:00</div>
-                <div class="sub-value">утра</div>
-            </div>
-        </div>
 
-        <div class="invitation-text animate-in delay-2">
-            <p><strong>Ассаламу алейкум, дорогие гости!</strong></p>
-            <p>
-                С радостью и трепетом в сердцах мы, <em>Ибрагим</em> и <em>Наиля</em>, 
-                приглашаем вас разделить с нами благословенный день нашего никаха. 
-                Пусть этот священный обряд станет началом нашего совместного пути, 
-                наполненного любовью, согласием и милостью Всевышнего.
-            </p>
-            <p>
-                Ваше присутствие будет для нас величайшей честью и поддержкой. 
-                Мы искренне надеемся увидеть вас в этот особенный час, 
-                чтобы вместе вознести молитвы и разделить радость торжества.
-            </p>
-            <div class="gift-note">
-                Ваше присутствие — самый ценный дар для нас. Если же вы желаете проявить внимание
-                иным образом, мы будем признательны за конверты, которые помогут нам начать
-                совместный путь.
-            </div>
-        </div>
+            <header class="main-title animate-in">
+                <h1>Ибрагим & Наиля</h1>
+                <div class="nikah-word">Никах</div>
+                <div class="blessing">С благословения Всевышнего</div>
+            </header>
 
-        <div class="registration-section animate-in delay-3">
-            <h2>Подтверждение присутствия</h2>
-            <form id="guestForm" autocomplete="off">
-                <div class="form-group">
-                    <label for="guestName">Ваше имя</label>
-                    <input type="text" id="guestName" name="name" required placeholder="Введите ваше имя">
+            <div class="info-cards animate-in delay-1">
+                <div class="info-card">
+                    <span class="icon">📅</span>
+                    <div class="label">Дата</div>
+                    <div class="value">27 сентября</div>
+                    <div class="sub-value">2026 года</div>
                 </div>
-                <div class="form-group">
-                    <label for="guestPhone">Номер телефона</label>
-                    <input type="tel" id="guestPhone" name="phone" required placeholder="+7 (___) ___-__-__">
+                <div class="info-card">
+                    <span class="icon">🕰️</span>
+                    <div class="label">Время</div>
+                    <div class="value">11:00</div>
+                    <div class="sub-value">утра</div>
                 </div>
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <span>Я приду</span>
-                </button>
-                <div class="error-message" id="errorMessage"></div>
-            </form>
-            <div class="success-message" id="successMessage">
-                Спасибо! Ваше присутствие подтверждено. Ждём вас!
             </div>
-        </div>
 
-        <div class="ornament-bottom animate-in delay-4">
-            <span class="ornament-symbol">❖ ❖ ❖</span>
-        </div>
-    </div>
+            <div class="invitation-text animate-in delay-2">
+                <p><strong>Ассаламу алейкум, дорогие гости!</strong></p>
+                <p>
+                    С радостью и трепетом в сердцах мы, <em>Ибрагим</em> и <em>Наиля</em>, 
+                    приглашаем вас разделить с нами благословенный день нашего никаха. 
+                    Пусть этот священный обряд станет началом нашего совместного пути, 
+                    наполненного любовью, согласием и милостью Всевышнего.
+                </p>
+                <p>
+                    Ваше присутствие будет для нас величайшей честью и поддержкой. 
+                    Мы искренне надеемся увидеть вас в этот особенный час, 
+                    чтобы вместе вознести молитвы и разделить радость торжества.
+                </p>
+                <div class="gift-note">
+                    Ваше присутствие — самый ценный дар для нас. Если же вы желаете проявить внимание
+                    иным образом, мы будем признательны за конверты, которые помогут нам начать
+                    совместный путь.
+                </div>
+            </div>
+
+            <div class="registration-section animate-in delay-3">
+                <h2>Подтверждение присутствия</h2>
+                <form id="guestForm" autocomplete="off">
+                    <div class="form-group">
+                        <label for="guestName">Ваше имя</label>
+                        <input type="text" id="guestName" name="name" required placeholder="Введите ваше имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="guestPhone">Номер телефона</label>
+                        <input type="tel" id="guestPhone" name="phone" required placeholder="+7 (___) ___-__-__">
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span>Я приду</span>
+                    </button>
+                    <div class="error-message" id="errorMessage"></div>
+                </form>
+                <div class="success-message" id="successMessage">
+                    Спасибо! Ваше присутствие подтверждено. Ждём вас!
+                </div>
+            </div>
+
+            <div class="ornament-bottom animate-in delay-4">
+                <span class="ornament-symbol">❖ ❖ ❖</span>
+            </div>
+        </div><!-- /.content-overlay -->
+    </div><!-- /.invitation-container -->
 
     <!-- Кнопка администратора -->
     <button class="admin-trigger" id="adminTrigger" title="Настройки" aria-label="Админ-панель">⚙</button>
@@ -717,7 +775,7 @@
     <script>
         // ===== КОНФИГУРАЦИЯ FIREBASE =====
         // ВАЖНО: Замените этот объект на данные вашего Firebase-проекта.
-        const firebaseConfig = {
+       const firebaseConfig = {
   apiKey: "AIzaSyDeQB5i5wQlPIukdOpOORS1vdcVBaX-Tbk",
   authDomain: "nikah-invitations.firebaseapp.com",
   databaseURL: "https://nikah-invitations-default-rtdb.europe-west1.firebasedatabase.app",
@@ -726,7 +784,6 @@
   messagingSenderId: "408413734731",
   appId: "1:408413734731:web:8b96663010877951f30ace"
 };
-
         // Инициализация Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
@@ -815,7 +872,6 @@
             return database.ref('guests').remove();
         }
 
-        // Подписка на изменения в базе данных
         function listenToGuests(callback) {
             database.ref('guests').on('value', (snapshot) => {
                 const guests = [];
@@ -838,7 +894,6 @@
             }
 
             try {
-                // Проверка дубликатов
                 const snapshot = await database.ref('guests').once('value');
                 const guests = [];
                 snapshot.forEach((child) => {
@@ -864,7 +919,6 @@
 
                 await saveGuestToFirebase(newGuest);
 
-                // Блокируем форму на этом устройстве
                 guestNameInput.disabled = true;
                 guestPhoneInput.disabled = true;
                 submitBtn.disabled = true;
@@ -909,7 +963,6 @@
             }
         });
 
-        // Открытие через URL-параметр ?admin=1
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('admin') === '1') {
             openAdminModal();
@@ -958,7 +1011,6 @@
 
             try {
                 await deleteAllGuestsFromFirebase();
-                // Список обновится автоматически через подписку
             } catch (error) {
                 console.error('Ошибка при удалении:', error);
                 alert('Не удалось удалить данные. Попробуйте ещё раз.');
